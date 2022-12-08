@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         for (int i = 0; i < 1000; i++) {
             new Thread( () -> {
-                String route = generateRoute( "RLRFR", 100 );
+                String route = generateRoute( "RLRFR", 10000 );
                 int frequency = (int) route.chars()
                         .filter( ch -> ch == 'R' ).count();
 
