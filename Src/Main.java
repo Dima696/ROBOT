@@ -5,21 +5,27 @@ import java.util.Random;
 public class Main {
     public static final Map<Integer, Integer> sizeToFreq = new HashMap <>();
     public static void main(String[] args) {
-        for (int i = 0; i < 1000; i++) {
-            new Thread( () -> {
-                String route = generateRoute( "RLRFR", 10000 );
-                int frequency = (int) route.chars()
-                        .filter( ch -> ch == 'R' ).count();
+       Runnable task = () -> {
+            String route = generateRoute("RLRFR", 100);
+            int frequency = (int) route.chars()
+                    .filter(ch -> ch == 'R').count();
 
-                synchronized (sizeToFreq) {
-                    if (sizeToFreq.containsKey( frequency )) {
-                        sizeToFreq.put(frequency, sizeToFreq.get( frequency ) + 1 );
-                    } else {
-                        sizeToFreq.put( frequency, 1 );
-                    }
+            synchronized (sizeToFreq) {
+                if (sizeToFreq.containsKey(frequency)) {
+                    sizeToFreq.put(frequency, sizeToFreq.get(frequency) + 1);
+                } else {
+                    sizeToFreq.put(frequency, 1);
                 }
-            } ).start();
+            }
+        };
+
+        for (int i = 0; i < 1000; i++) {
+            Thread thread2 = new Thread(task);
+            thread2.start();
+            thread2.join();
         }
+
+
         Map.Entry<Integer, Integer> mapAmount = sizeToFreq
                 .entrySet()
                 .stream()
