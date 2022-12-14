@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Main {
     public static final Map<Integer, Integer> sizeToFreq = new HashMap <>();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
        Runnable task = () -> {
             String route = generateRoute("RLRFR", 100);
             int frequency = (int) route.chars()
